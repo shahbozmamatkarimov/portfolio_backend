@@ -3,10 +3,11 @@ import {
   Post,
   Res,
   Body,
-  Put,
+  Patch,
   Param,
   Get,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -16,6 +17,10 @@ import { LoginDto } from './dto/login.dto';
 import { CookieGetter } from 'src/decorators/cookieGetter.decorator';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { NewPasswordUserDto } from './dto/new-password-user.dto';
+import { EmailUserDto } from './dto/email-user.dto';
+import { UserSelfGuard } from 'src/guards/user-self.guard';
+import { JwtGuard } from 'src/guards/jwt.guard';
+import { IsAdminGuard } from 'src/guards/isAdmin.guard';
 
 @ApiTags('users')
 @Controller('user')
@@ -50,13 +55,17 @@ export class UserController {
   }
 
   @ApiOperation({ summary: 'update user profile' })
-  @Put('update/:id')
+  @Patch('/info/:id')
+  @UseGuards(UserSelfGuard)
+  @UseGuards(JwtGuard)
   update(@Body() updateUserDto: UpdateUserDto, @Param('id') id: number) {
     return this.userService.update(updateUserDto, id);
   }
 
   @ApiOperation({ summary: 'update user password' })
-  @Put('newpassword/:id')
+  @Patch('/password/:id')
+  @UseGuards(UserSelfGuard)
+  @UseGuards(JwtGuard)
   newPassword(
     @Body() newPasswordUserDto: NewPasswordUserDto,
     @Param('id') id: number,
@@ -65,25 +74,33 @@ export class UserController {
   }
 
   @ApiOperation({ summary: 'get all users' })
-  @Get('/findall')
+  @Get('/all')
+  @UseGuards(IsAdminGuard)
+  @UseGuards(JwtGuard)
   findAll() {
     return this.userService.findAll();
   }
 
   @ApiOperation({ summary: 'get user by id' })
   @Get('/id/:id')
+  @UseGuards(UserSelfGuard)
+  @UseGuards(JwtGuard)
   findById(@Param('id') id: number) {
     return this.userService.findById(id);
   }
 
   @ApiOperation({ summary: 'get user by email' })
-  @Get('/email/:email')
-  findByEmail(@Param('email') email: string) {
-    return this.userService.findByEmail(email);
+  @Get('/email')
+  @UseGuards(UserSelfGuard)
+  @UseGuards(JwtGuard)
+  findByEmail(@Body() emailDto: EmailUserDto) {
+    return this.userService.findByEmail(emailDto);
   }
 
   @ApiOperation({ summary: 'delete user by id' })
   @Delete('/:id')
+  @UseGuards(IsAdminGuard)
+  @UseGuards(JwtGuard)
   remove(@Param('id') id: number) {
     return this.userService.remove(id);
   }

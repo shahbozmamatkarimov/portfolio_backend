@@ -1,11 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber } from 'class-validator';
 
-export class CreateDislikeDto {
-  @ApiProperty({ example: '123', description: 'dislikes' })
+export class CreateEmotionCommentDto {
+  @ApiProperty({ example: 'content title...', description: 'like count' })
   @IsNotEmpty()
   @IsNumber()
-  dislikes: number;
+  likes: number;
+
   @ApiProperty({ example: '1', description: 'project id' })
   @IsNotEmpty()
   @IsNumber()

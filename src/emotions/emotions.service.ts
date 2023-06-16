@@ -1,26 +1,30 @@
 import { Injectable } from '@nestjs/common';
 import { CreateEmotionDto } from './dto/create-emotion.dto';
 import { UpdateEmotionDto } from './dto/update-emotion.dto';
+import { InjectModel } from '@nestjs/sequelize';
+import { Emotion } from './models/emotion.model';
 
 @Injectable()
 export class EmotionsService {
+  constructor(@InjectModel(Emotion) private emotionsRepo: typeof Emotion) {}
+
   create(createEmotionDto: CreateEmotionDto) {
-    return 'This action adds a new emotion';
+    return this.emotionsRepo.create(createEmotionDto);
   }
 
   findAll() {
-    return `This action returns all emotions`;
+    return this.emotionsRepo.findAll({ include: { all: true } });
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} emotion`;
+    return this.emotionsRepo.findOne({ where: { id }, include: { all: true } });
   }
 
   update(id: number, updateEmotionDto: UpdateEmotionDto) {
-    return `This action updates a #${id} emotion`;
+    return this.emotionsRepo.update(updateEmotionDto, { where: { id } });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} emotion`;
+    return this.emotionsRepo.destroy({ where: { id } });
   }
 }

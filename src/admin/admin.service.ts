@@ -39,35 +39,39 @@ export class AdminService {
   }
 
   async login(loginAdminDto: LoginAdminDto, res: Response) {
-    const { email, password } = loginAdminDto;
-    const check_email = await this.adminRepository.findOne({
-      where: { email },
-    });
-    if (!check_email) {
-      throw new BadRequestException('Not found email address!');
-    }
-    let is_match_pass: boolean;
     try {
-      is_match_pass = await compare(password, check_email.hashed_password);
-      if (!is_match_pass) {
-        throw new BadRequestException('Wrong password!');
+      const { email, password } = loginAdminDto;
+      const check_email = await this.adminRepository.findOne({
+        where: { email },
+      });
+      if (!check_email) {
+        throw new BadRequestException('Not found email address!');
       }
+      let is_match_pass: boolean;
+      try {
+        is_match_pass = await compare(password, check_email.hashed_password);
+        if (!is_match_pass) {
+          throw new BadRequestException('Wrong password!');
+        }
+      } catch (error) {
+        throw new BadRequestException(error.message);
+      }
+      const tokens = await this.generateTokenAdmin(check_email);
+      let hashed_refresh_token: string;
+      try {
+        hashed_refresh_token = await hash(tokens.refresh_token, 7);
+      } catch (error) {
+        throw new BadRequestException(error.message);
+      }
+      await this.adminRepository.update(
+        { hashed_refresh_token },
+        { where: { id: check_email.id }, returning: true },
+      );
+      await this.writeToCookieAdmin(tokens, res);
+      return { access_token: tokens.access_token };
     } catch (error) {
-      throw new BadRequestException(error.message);
+      console.log(error.message);
     }
-    const tokens = await this.generateTokenAdmin(check_email);
-    let hashed_refresh_token: string;
-    try {
-      hashed_refresh_token = await hash(tokens.refresh_token, 7);
-    } catch (error) {
-      throw new BadRequestException(error.message);
-    }
-    await this.adminRepository.update(
-      { hashed_refresh_token },
-      { where: { id: check_email.id }, returning: true },
-    );
-    await this.writeToCookieAdmin(tokens, res);
-    return { access_token: tokens.access_token };
   }
 
   async logout(refresh_token: string, res: Response) {

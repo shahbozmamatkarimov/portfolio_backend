@@ -6,31 +6,44 @@ import {
   Put,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ExperienceService } from './experience.service';
 import { CreateExperienceDto } from './dto/create-experience.dto';
 import { UpdateExperienceDto } from './dto/update-experience.dto';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { IsAdminGuard } from 'src/guards/isAdmin.guard';
+import { JwtGuard } from 'src/guards/jwt.guard';
 
+@ApiTags('Experience')
 @Controller('experience')
 export class ExperienceController {
   constructor(private readonly experienceService: ExperienceService) {}
 
+  @ApiOperation({ summary: 'create a new experience' })
   @Post('create')
+  @UseGuards(IsAdminGuard)
+  @UseGuards(JwtGuard)
   create(@Body() createExperienceDto: CreateExperienceDto) {
     return this.experienceService.create(createExperienceDto);
   }
 
+  @ApiOperation({ summary: 'get all experiences' })
   @Get('findall')
   findAll() {
     return this.experienceService.findAll();
   }
 
+  @ApiOperation({ summary: 'get experience by id' })
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.experienceService.findOne(+id);
   }
 
+  @ApiOperation({ summary: 'update experience by id' })
   @Put(':id')
+  @UseGuards(IsAdminGuard)
+  @UseGuards(JwtGuard)
   update(
     @Param('id') id: string,
     @Body() updateExperienceDto: UpdateExperienceDto,
@@ -38,7 +51,10 @@ export class ExperienceController {
     return this.experienceService.update(+id, updateExperienceDto);
   }
 
+  @ApiOperation({ summary: 'delete experience by id' })
   @Delete(':id')
+  @UseGuards(IsAdminGuard)
+  @UseGuards(JwtGuard)
   remove(@Param('id') id: string) {
     return this.experienceService.remove(+id);
   }

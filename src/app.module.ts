@@ -15,7 +15,6 @@ import { ContentModule } from './content/content.module';
 import { SocialNetworksModule } from './social_networks/social_networks.module';
 import { ExperienceModule } from './experience/experience.module';
 import { MessageModule } from './message/message.module';
-import { UserModule } from './user/user.module';
 import { Comment } from './comment/models/comment.model';
 import { Project } from './projects/models/project.model';
 import { Skill } from './skills/models/skill.model';
@@ -23,12 +22,12 @@ import { Content } from './content/models/content.model';
 import { SocialNetwork } from './social_networks/models/social_network.model';
 import { Experience } from './experience/models/experience.model';
 import { Message } from './message/models/message.model';
-import { User } from './user/models/user.model';
 import { EmotionsModule } from './emotions/emotions.module';
-import { DislikesModule } from './dislikes/dislikes.module';
-import { DislikeCommentsModule } from './dislike_comments/dislike_comments.module';
 import { EmotionCommentsModule } from './emotion_comments/emotion_comments.module';
-import { Dislike } from './dislikes/models/dislike.model';
+import { User } from './user/models/user.model';
+import { UserModule } from './user/user.module';
+import { Emotion } from './emotions/models/emotion.model';
+import { EmotionComment } from './emotion_comments/models/emotion_comment.model';
 
 @Module({
   imports: [
@@ -52,8 +51,9 @@ import { Dislike } from './dislikes/models/dislike.model';
         SocialNetwork,
         Experience,
         Message,
+        Emotion,
+        EmotionComment,
         User,
-        Dislike,
       ],
       autoLoadModels: true,
       logging: true,
@@ -68,8 +68,6 @@ import { Dislike } from './dislikes/models/dislike.model';
     MessageModule,
     UserModule,
     EmotionsModule,
-    DislikesModule,
-    DislikeCommentsModule,
     EmotionCommentsModule,
   ],
   controllers: [AppController],

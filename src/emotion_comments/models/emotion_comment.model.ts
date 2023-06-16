@@ -8,12 +8,13 @@ import {
 } from 'sequelize-typescript';
 import { Project } from '../../projects/models/project.model';
 
-interface DislikeAttr {
-  dislikes: number;
+interface EmotionCommentAttr {
+  like: number;
+  comment_id: number;
 }
 
-@Table({ tableName: 'dislike' })
-export class Dislike extends Model<Dislike, DislikeAttr> {
+@Table({ tableName: 'emotioncomments' })
+export class EmotionComment extends Model<EmotionComment, EmotionCommentAttr> {
   @Column({
     type: DataType.INTEGER,
     autoIncrement: true,
@@ -25,7 +26,7 @@ export class Dislike extends Model<Dislike, DislikeAttr> {
     type: DataType.INTEGER,
     allowNull: false,
   })
-  dislikes: number;
+  like: number;
 
   @ForeignKey(() => Project)
   @Column({
@@ -34,5 +35,5 @@ export class Dislike extends Model<Dislike, DislikeAttr> {
   project_id: number;
 
   @BelongsTo(() => Project)
-  projects: string[];
+  projects: Project[];
 }
