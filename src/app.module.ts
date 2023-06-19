@@ -28,6 +28,8 @@ import { User } from './user/models/user.model';
 import { UserModule } from './user/user.module';
 import { Emotion } from './emotions/models/emotion.model';
 import { EmotionComment } from './emotion_comments/models/emotion_comment.model';
+import { ProfileModule } from './profile/profile.module';
+import { CommentPostsModule } from './comment_posts/comment_posts.module';
 
 @Module({
   imports: [
@@ -69,6 +71,8 @@ import { EmotionComment } from './emotion_comments/models/emotion_comment.model'
     UserModule,
     EmotionsModule,
     EmotionCommentsModule,
+    ProfileModule,
+    CommentPostsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

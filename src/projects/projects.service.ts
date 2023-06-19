@@ -7,6 +7,7 @@ import { Project } from './models/project.model';
 @Injectable()
 export class ProjectsService {
   constructor(@InjectModel(Project) private projectRepo: typeof Project) {}
+
   create(createProjectDto: CreateProjectDto) {
     return this.projectRepo.create(createProjectDto);
   }

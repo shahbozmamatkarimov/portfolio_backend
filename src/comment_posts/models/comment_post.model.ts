@@ -7,15 +7,14 @@ import {
   Table,
 } from 'sequelize-typescript';
 import { User } from '../../user/models/user.model';
-import { Project } from '../../projects/models/project.model';
+import { Content } from '../../content/models/content.model';
 
-interface CommentAttr {
+interface CommentPostAttr {
   comment: string;
-  reply: string;
 }
 
-@Table({ tableName: 'comment' })
-export class Comment extends Model<Comment, CommentAttr> {
+@Table({ tableName: 'comment_posts' })
+export class CommentPost extends Model<CommentPost, CommentPostAttr> {
   @Column({
     type: DataType.INTEGER,
     autoIncrement: true,
@@ -29,11 +28,6 @@ export class Comment extends Model<Comment, CommentAttr> {
   })
   comment: string;
 
-  @Column({
-    type: DataType.STRING,
-  })
-  reply: string;
-
   @ForeignKey(() => User)
   @Column({
     type: DataType.INTEGER,
@@ -43,12 +37,12 @@ export class Comment extends Model<Comment, CommentAttr> {
   @BelongsTo(() => User)
   users: User[];
 
-  @ForeignKey(() => Project)
+  @ForeignKey(() => Content)
   @Column({
     type: DataType.INTEGER,
   })
-  project_id: number;
+  content_id: number;
 
-  @BelongsTo(() => Project)
-  projects: Project[];
+  @BelongsTo(() => Content)
+  contents: Content[];
 }

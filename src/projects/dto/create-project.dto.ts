@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsString, IsNumber, IsDate } from 'class-validator';
 
 export class CreateProjectDto {
   @ApiProperty({ example: 'https://image_url', description: 'image url' })
@@ -19,6 +19,22 @@ export class CreateProjectDto {
   @IsNotEmpty()
   @IsString()
   description: string;
+
+  @ApiProperty({
+    example: '01/01/2023',
+    description: 'poject start date',
+  })
+  @IsNotEmpty()
+  @IsDate()
+  start_time: string;
+
+  @ApiProperty({
+    example: '01/01/2023',
+    description: 'poject end date',
+  })
+  @IsNotEmpty()
+  @IsDate()
+  end_time: string;
 
   @ApiProperty({
     example: 'https://url',
@@ -43,12 +59,4 @@ export class CreateProjectDto {
   @IsNotEmpty()
   @IsString()
   languages: string;
-
-  @ApiProperty({
-    example: '1',
-    description: 'project comment id',
-  })
-  @IsNotEmpty()
-  @IsNumber()
-  comment_id: number;
 }

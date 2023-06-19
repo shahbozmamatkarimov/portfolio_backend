@@ -1,18 +1,18 @@
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
-interface ProjectAttr {
+interface ProfileAttr {
   image: string;
-  title: string;
+  company: string;
+  first_name: string;
+  last_name: string;
+  city: string;
+  district: string;
+  address: string;
   description: string;
-  start_time: string;
-  end_time: string;
-  link: string;
-  github_link: string;
-  languages: string;
 }
 
-@Table({ tableName: 'project' })
-export class Project extends Model<Project, ProjectAttr> {
+@Table({ tableName: 'profile' })
+export class Profile extends Model<Profile, ProfileAttr> {
   @Column({
     type: DataType.INTEGER,
     autoIncrement: true,
@@ -22,49 +22,60 @@ export class Project extends Model<Project, ProjectAttr> {
 
   @Column({
     type: DataType.STRING,
-    allowNull: false,
   })
   image: string;
-
-  @Column({
-    type: DataType.DATE,
-    allowNull: false,
-  })
-  start_time: string;
-
-  @Column({
-    type: DataType.DATE,
-    allowNull: false,
-  })
-  end_time: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  title: string;
+  company: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  email: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  phone: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  first_name: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  last_name: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  city: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  district: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  address: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
   description: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  link: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  github_link: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  languages: string;
 }

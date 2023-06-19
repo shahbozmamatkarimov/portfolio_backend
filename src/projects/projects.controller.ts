@@ -3,7 +3,7 @@ import {
   Get,
   Post,
   Body,
-  Patch,
+  Put,
   Param,
   Delete,
   UseGuards,
@@ -41,7 +41,7 @@ export class ProjectsController {
   }
 
   @ApiOperation({ summary: 'update project by id' })
-  @Patch(':id')
+  @Put(':id')
   @UseGuards(IsAdminGuard)
   @UseGuards(JwtGuard)
   update(@Param('id') id: string, @Body() updateProjectDto: UpdateProjectDto) {

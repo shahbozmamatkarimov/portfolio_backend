@@ -1,12 +1,4 @@
-import {
-  BelongsTo,
-  Column,
-  DataType,
-  ForeignKey,
-  Model,
-  Table,
-} from 'sequelize-typescript';
-import { Comment } from '../../comment/models/comment.model';
+import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
 interface ContentAttr {
   title: string;
@@ -24,23 +16,9 @@ export class Content extends Model<Content, ContentAttr> {
   id: number;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.TEXT,
     allowNull: false,
+    unique: true,
   })
-  title: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  description: string;
-
-  @ForeignKey(() => Comment)
-  @Column({
-    type: DataType.INTEGER,
-  })
-  comment_id: number;
-
-  @BelongsTo(() => Comment)
-  comments: Comment[];
+  content: string;
 }
