@@ -7,5 +7,6 @@ interface ContentAttr {
 export declare class Content extends Model<Content, ContentAttr> {
     id: number;
     content: string;
+    image: string;
 }
 export {};

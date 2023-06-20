@@ -23,5 +23,13 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateContentDto.prototype, "content", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        example: 'https://url',
+        description: 'image',
+    }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateContentDto.prototype, "image", void 0);
 exports.CreateContentDto = CreateContentDto;
 //# sourceMappingURL=create-content.dto.js.map

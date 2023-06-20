@@ -6,9 +6,10 @@ const swagger_1 = require("@nestjs/swagger");
 const cookieParser = require("cookie-parser");
 const start = async () => {
     try {
-        const app = await core_1.NestFactory.create(app_module_1.AppModule, { cors: true });
+        const app = await core_1.NestFactory.create(app_module_1.AppModule);
         const PORT = process.env.PORT || 4000;
         app.use(cookieParser());
+        app.setGlobalPrefix('api');
         const config = new swagger_1.DocumentBuilder()
             .setTitle('NestJS TEST')
             .setDescription('REST API')
@@ -17,7 +18,6 @@ const start = async () => {
             .build();
         const document = swagger_1.SwaggerModule.createDocument(app, config);
         swagger_1.SwaggerModule.setup('/api/docs', app, document);
-        app.setGlobalPrefix('api');
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`);
         });

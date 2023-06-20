@@ -23,12 +23,19 @@ __decorate([
 ], Content.prototype, "id", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.TEXT,
+        type: sequelize_typescript_1.DataType.STRING,
         allowNull: false,
         unique: true,
     }),
     __metadata("design:type", String)
 ], Content.prototype, "content", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.STRING,
+        unique: true,
+    }),
+    __metadata("design:type", String)
+], Content.prototype, "image", void 0);
 Content = __decorate([
     (0, sequelize_typescript_1.Table)({ tableName: 'content' })
 ], Content);

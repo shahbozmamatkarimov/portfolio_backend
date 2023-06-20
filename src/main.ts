@@ -8,6 +8,7 @@ const start = async () => {
     const app = await NestFactory.create(AppModule);
     const PORT = process.env.PORT || 4000;
     app.use(cookieParser());
+    app.setGlobalPrefix('api');
     const config = new DocumentBuilder()
       .setTitle('NestJS TEST')
       .setDescription('REST API')
@@ -16,7 +17,6 @@ const start = async () => {
       .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('/api/docs', app, document);
-    app.setGlobalPrefix('api');
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
