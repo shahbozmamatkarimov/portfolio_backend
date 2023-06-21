@@ -9,11 +9,4 @@ export class CreateContentDto {
   @IsNotEmpty()
   @IsString()
   content: string;
-
-  @ApiProperty({
-    example: 'https://url',
-    description: 'image',
-  })
-  @IsString()
-  image: string;
 }

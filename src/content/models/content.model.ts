@@ -21,10 +21,4 @@ export class Content extends Model<Content, ContentAttr> {
     unique: true,
   })
   content: string;
-
-  @Column({
-    type: DataType.STRING,
-    unique: true,
-  })
-  image: string;
 }
