@@ -7,11 +7,6 @@ const cookieParser = require("cookie-parser");
 const start = async () => {
     try {
         const app = await core_1.NestFactory.create(app_module_1.AppModule, { cors: true });
-        app.enableCors({
-            allowedHeaders: ['content-type'],
-            origin: ['*'],
-            credentials: true,
-        });
         const PORT = process.env.PORT || 4000;
         app.use(cookieParser());
         app.setGlobalPrefix('api');
