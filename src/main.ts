@@ -5,12 +5,12 @@ import * as cookieParser from 'cookie-parser';
 
 const start = async () => {
   try {
-    const app = await NestFactory.create(AppModule, { cors: true });
-    // app.enableCors({
-    //   allowedHeaders: ['content-type'],
-    //   origin: ['*'],
-    //   credentials: true,
-    // });
+    const app = await NestFactory.create(AppModule);
+    app.enableCors({
+      allowedHeaders: ['content-type'],
+      origin: ['*'],
+      credentials: true,
+    });
     const PORT = process.env.PORT || 4000;
     app.use(cookieParser());
     app.setGlobalPrefix('api');
